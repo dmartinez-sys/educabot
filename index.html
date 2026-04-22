@@ -82,7 +82,7 @@ nav.scrolled {
 .hero {
   min-height: 100vh;
   display: flex; flex-direction: column; justify-content: center;
-  padding: 140px 56px 100px;
+  padding: 140px 56px 100px; max-width: 100%;
   position: relative; overflow: hidden;
 }
 
@@ -199,6 +199,14 @@ nav.scrolled {
 
 /* ── SECTIONS ── */
 section { padding: 100px 56px; }
+
+/* ── CONTAINER ── */
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  width: 100%;
+}
+
 
 .label {
   display: inline-flex; align-items: center; gap: 8px;
@@ -548,7 +556,8 @@ footer {
 @media (max-width: 860px) {
   nav { padding: 16px 24px; }
   .nav-links { display: none; }
-  .hero, section, .cta-section { padding-left: 24px; padding-right: 24px; }
+  .hero, section, .cta-section { padding-left: 20px; padding-right: 20px; }
+  .container { padding: 0 4px; }
   .hero h1 { font-size: 2.8rem; }
   .pain-grid, .features-grid, .results-grid { grid-template-columns: 1fr; }
   .how-inner, .pricing-grid { grid-template-columns: 1fr; }
@@ -693,6 +702,7 @@ footer {
 <section class="hero">
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
+  <div class="container">
   <div class="hero-eyebrow">
     <div class="hero-eyebrow-dot"></div>
     Agente IA para centros educativos · imlabs.es
@@ -729,6 +739,7 @@ footer {
       <div class="stat-lbl">En tu CRM actual</div>
     </div>
   </div>
+  </div>
 </section>
 
 <!-- TICKER -->
@@ -751,6 +762,7 @@ footer {
 
 <!-- VIDEO -->
 <section class="video-section">
+  <div class="container">
   <div class="label" style="justify-content:center">Vélo en acción</div>
   <h2 class="reveal video-title">Un minuto. <em>Todo claro.</em></h2>
   <p class="reveal video-sub">Mira cómo Educabot capta, cualifica y agenda leads de forma automática en un centro educativo real.</p>
@@ -759,10 +771,12 @@ footer {
       <iframe src="https://www.youtube.com/embed/rEYmdmVxaT0?si=-q-3eiiG9DiBVMP6" title="Educabot — Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
   </div>
+  </div>
 </section>
 
 <!-- PAIN -->
 <section class="pain">
+  <div class="container">
   <div class="label">El problema</div>
   <div class="pain-header reveal">
     <h2>Tu equipo pierde el tiempo<br>con los que <em>nunca van a matricularse.</em></h2>
@@ -800,10 +814,12 @@ footer {
       <p>Los datos del lead llegan tarde, incompletos o no llegan. El CRM no sirve de nada si nadie lo alimenta bien.</p>
     </div>
   </div>
+  </div>
 </section>
 
 <!-- HOW -->
 <section class="how" id="como-funciona">
+  <div class="container">
   <div class="how-inner">
     <div class="how-left">
       <div class="label">Cómo funciona</div>
@@ -885,10 +901,12 @@ footer {
       </div>
     </div>
   </div>
+  </div>
 </section>
 
 <!-- FEATURES -->
 <section class="features" id="funcionalidades">
+  <div class="container">
   <div class="label">Funcionalidades</div>
   <h2 class="reveal">Todo lo que necesitas.<br><em>Nada de lo que no.</em></h2>
   <p class="features-sub reveal">Una plataforma completa. Sin integraciones complicadas.</p>
@@ -930,10 +948,12 @@ footer {
       <span class="feat-chip">Multi-landing</span>
     </div>
   </div>
+  </div>
 </section>
 
 <!-- RESULTS -->
 <section class="results">
+  <div class="container">
   <div class="label">Resultados reales</div>
   <h2 class="reveal">Números reales.<br><em>Sin trampa.</em></h2>
   <p class="results-sub reveal">Datos de IM Education tras implantar Educabot en su web y campañas de captación.</p>
@@ -960,10 +980,12 @@ footer {
       <cite>— Equipo IM Education · imlabs Group</cite>
     </div>
   </div>
+  </div>
 </section>
 
 <!-- PRICING -->
 <section class="pricing" id="precios">
+  <div class="container">
   <div class="label">Precios</div>
   <h2 class="reveal">Transparente.<br><em>Sin sorpresas.</em></h2>
   <p class="pricing-sub reveal">Un precio fijo mensual. Sin comisiones por conversación, sin letra pequeña.</p>
@@ -1011,6 +1033,7 @@ footer {
 
 <!-- FAQ -->
 <section class="faq">
+  <div class="container">
   <div class="label">FAQ</div>
   <h2 class="reveal">Preguntas frecuentes</h2>
   <div class="faq-list">
@@ -1038,6 +1061,7 @@ footer {
       <div class="faq-q">¿Hay permanencia? <span>+</span></div>
       <div class="faq-a">No. Facturación mensual sin permanencia. Solo la puesta en marcha inicial de 149€ que cubre el setup y onboarding personalizado.</div>
     </div>
+  </div>
   </div>
 </section>
 
