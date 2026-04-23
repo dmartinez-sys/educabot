@@ -191,6 +191,16 @@ header img { height: 60px; width: auto; }
             <label>Resumen (extracto)</label>
             <textarea id="f-excerpt" rows="2" placeholder="Breve descripción que aparece en el listado..."></textarea>
           </div>
+          <div class="field-row">
+            <div class="field">
+              <label>URL de imagen destacada</label>
+              <input type="text" id="f-image" placeholder="https://...">
+            </div>
+            <div class="field">
+              <label>Fecha de publicación</label>
+              <input type="datetime-local" id="f-published-at">
+            </div>
+          </div>
           <div class="field">
             <label>Contenido del artículo</label>
             <textarea id="content-field" id="f-content" placeholder="Escribe aquí el contenido completo del artículo..."></textarea>
@@ -278,6 +288,9 @@ function openPost(id) {
   document.getElementById('f-category').value = p.category || 'General';
   document.getElementById('f-reading').value = p.reading_time || '';
   document.getElementById('f-excerpt').value = p.excerpt || '';
+  document.getElementById('f-image').value = p.image_url || '';
+  const d = p.published_at ? new Date(p.published_at).toISOString().slice(0,16) : '';
+  document.getElementById('f-published-at').value = d;
   document.getElementById('content-field').value = p.content || '';
   document.getElementById('btn-delete').style.display = 'block';
   showEditor();
@@ -291,6 +304,8 @@ function newPost() {
   document.getElementById('f-category').value = 'General';
   document.getElementById('f-reading').value = '5 min';
   document.getElementById('f-excerpt').value = '';
+  document.getElementById('f-image').value = '';
+  document.getElementById('f-published-at').value = new Date().toISOString().slice(0,16);
   document.getElementById('content-field').value = '';
   document.getElementById('btn-delete').style.display = 'none';
   showEditor();
@@ -322,6 +337,8 @@ async function savePost(publish) {
     reading_time: document.getElementById('f-reading').value,
     excerpt: document.getElementById('f-excerpt').value,
     content: document.getElementById('content-field').value,
+    image_url: document.getElementById('f-image').value.trim() || null,
+    published_at: document.getElementById('f-published-at').value ? new Date(document.getElementById('f-published-at').value).toISOString() : new Date().toISOString(),
     published: publish,
     updated_at: new Date().toISOString(),
   };

@@ -152,7 +152,7 @@ async function loadPosts() {
     .from('posts')
     .select('*')
     .eq('published', true)
-    .order('created_at', { ascending: false });
+    .order('published_at', { ascending: false });
 
   if (error) {
     document.getElementById('posts-grid').innerHTML = `<div class="empty-state"><h3>Error al cargar posts</h3><p>${error.message}</p></div>`;
@@ -170,8 +170,8 @@ function renderPosts(posts) {
   }
   grid.innerHTML = posts.map(p => `
     <a class="post-card" href="post.html?slug=${p.slug}">
-      <div class="post-thumb">
-        <span class="post-thumb-cat">${p.category || 'Blog'}</span>
+      <div class="post-thumb" style="${p.image_url ? `background-image:url(${p.image_url});background-size:cover;background-position:center` : 'background:linear-gradient(135deg,#EFF6FF,#DBEAFE)'}">
+        ${!p.image_url ? `<span class="post-thumb-cat">${p.category || 'Blog'}</span>` : ''}
       </div>
       <div class="post-content">
         <div class="post-meta">

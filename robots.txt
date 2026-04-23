@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /blog-admin.html
+Disallow: /uploads/
+
+Sitemap: https://educabot-crm.netlify.app/sitemap.xml
