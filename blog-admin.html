@@ -193,8 +193,13 @@ header img { height: 60px; width: auto; }
           </div>
           <div class="field-row">
             <div class="field">
-              <label>URL de imagen destacada</label>
-              <input type="text" id="f-image" placeholder="https://...">
+              <label>Imagen destacada</label>
+              <input type="file" id="f-image-file" accept="image/*" onchange="previewImage(this)">
+              <div id="f-image-preview" style="margin-top:8px;display:none">
+                <img id="f-image-thumb" style="width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid var(--gray-200)">
+                <button type="button" onclick="removeImage()" style="font-size:11px;color:var(--red);background:none;border:none;cursor:pointer;margin-top:4px;font-family:inherit">Eliminar imagen</button>
+              </div>
+              <input type="hidden" id="f-image">  
             </div>
             <div class="field">
               <label>Fecha de publicación</label>
@@ -289,6 +294,12 @@ function openPost(id) {
   document.getElementById('f-reading').value = p.reading_time || '';
   document.getElementById('f-excerpt').value = p.excerpt || '';
   document.getElementById('f-image').value = p.image_url || '';
+  if (p.image_url) {
+    document.getElementById('f-image-thumb').src = p.image_url;
+    document.getElementById('f-image-preview').style.display = 'block';
+  } else {
+    document.getElementById('f-image-preview').style.display = 'none';
+  }
   const d = p.published_at ? new Date(p.published_at).toISOString().slice(0,16) : '';
   document.getElementById('f-published-at').value = d;
   document.getElementById('content-field').value = p.content || '';
@@ -305,6 +316,8 @@ function newPost() {
   document.getElementById('f-reading').value = '5 min';
   document.getElementById('f-excerpt').value = '';
   document.getElementById('f-image').value = '';
+  document.getElementById('f-image-file').value = '';
+  document.getElementById('f-image-preview').style.display = 'none';
   document.getElementById('f-published-at').value = new Date().toISOString().slice(0,16);
   document.getElementById('content-field').value = '';
   document.getElementById('btn-delete').style.display = 'none';
@@ -330,6 +343,13 @@ async function savePost(publish) {
   const slug = document.getElementById('f-slug').value.trim();
   if (!title || !slug) { showToast('Título y slug son obligatorios', 'error'); return; }
 
+  // Upload image if file selected
+  const imageFile = document.getElementById('f-image-file').files[0];
+  if (imageFile) {
+    const url = await uploadImage(imageFile);
+    if (url) document.getElementById('f-image').value = url;
+  }
+
   const payload = {
     title,
     slug,
@@ -337,7 +357,7 @@ async function savePost(publish) {
     reading_time: document.getElementById('f-reading').value,
     excerpt: document.getElementById('f-excerpt').value,
     content: document.getElementById('content-field').value,
-    image_url: document.getElementById('f-image').value.trim() || null,
+    image_url: document.getElementById('f-image').value || null,
     published_at: document.getElementById('f-published-at').value ? new Date(document.getElementById('f-published-at').value).toISOString() : new Date().toISOString(),
     published: publish,
     updated_at: new Date().toISOString(),
@@ -369,6 +389,31 @@ async function deletePost() {
   document.getElementById('editor-form').style.display = 'none';
   showToast('Artículo eliminado', 'success');
   await loadPosts();
+}
+
+function previewImage(input) {
+  if (!input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('f-image-thumb').src = e.target.result;
+    document.getElementById('f-image-preview').style.display = 'block';
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function removeImage() {
+  document.getElementById('f-image').value = '';
+  document.getElementById('f-image-file').value = '';
+  document.getElementById('f-image-preview').style.display = 'none';
+}
+
+async function uploadImage(file) {
+  const ext = file.name.split('.').pop();
+  const filename = `${Date.now()}.${ext}`;
+  const { data, error } = await sb.storage.from('images').upload(filename, file, { upsert: true });
+  if (error) { showToast('Error subiendo imagen: ' + error.message, 'error'); return null; }
+  const { data: urlData } = sb.storage.from('images').getPublicUrl(filename);
+  return urlData.publicUrl;
 }
 
 function showToast(msg, type = '') {
