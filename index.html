@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -472,6 +473,7 @@ footer {
   .hero h1 { font-size: 34px; }
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -569,7 +571,7 @@ footer {
           <div class="msg-bot">Perfecto. Tenemos dos convocatorias este año. ¿Me dices tu nombre y email para enviarte el dossier?</div>
         </div>
         <div class="msg">
-          <div class="msg-user">Carlos Ruiz, carlos@empresa.com</div>
+          <div class="msg-user">Carlos Ruiz, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="402321322c2f3300252d30322533216e232f2d">[email&#160;protected]</a></div>
         </div>
         <div class="msg">
           <div class="msg-bot">Gracias Carlos. He reservado una llamada con Admisiones mañana a las 10:00 con enlace Meet incluido. ✓</div>
@@ -773,7 +775,7 @@ footer {
     </div>
     <a href="blog.html">Ver todos →</a>
   </div>
-  <div class="blog-grid">
+  <div class="blog-grid" id="home-blog-grid">
     <article class="blog-card fade-up" onclick="location.href='blog.html'" style="cursor:pointer">
       <div class="blog-thumb placeholder-shimmer"></div>
       <div class="blog-content">
@@ -810,7 +812,7 @@ footer {
         <a href="#">Blog</a>
         <a href="politica-de-privacidad.html">Privacidad</a>
         <a href="politica-de-cookies.html">Cookies</a>
-        <a href="mailto:hola@imlabs.es">hola@imlabs.es</a>
+        <a href="/cdn-cgi/l/email-protection#b0d8dfdcd1f0d9dddcd1d2c39ed5c3"><span class="__cf_email__" data-cfemail="81e9eeede0c1e8ecede0e3f2afe4f2">[email&#160;protected]</span></a>
       </div>
     </div>
     <div class="footer-copy">© 2025 imlabs · Todos los derechos reservados</div>
@@ -821,7 +823,30 @@ footer {
 @keyframes dotB { 0%,60%,100%{transform:translateY(0);opacity:.4} 30%{transform:translateY(-4px);opacity:1} }
 </style>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Load real blog posts from Supabase
+(async () => {
+  const SUPABASE_URL = 'https://jldvhpycybeqqyfyjsjt.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_sNRLhyvjFMbxT42b8BWcRA_BvWeEB88';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const { data } = await sb.from('posts').select('*').eq('published', true).order('published_at', { ascending: false }).limit(3);
+  if (!data || !data.length) return;
+  const grid = document.getElementById('home-blog-grid');
+  grid.innerHTML = data.map(p => `
+    <article class="blog-card fade-up" onclick="location.href='post.html?slug=${p.slug}'" style="cursor:pointer">
+      <div class="blog-thumb" style="${p.image_url ? `background-image:url(${p.image_url});background-size:cover;background-position:center` : 'background:linear-gradient(135deg,#EFF6FF,#DBEAFE)'};aspect-ratio:16/9;">
+        ${!p.image_url ? `<span style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#2563EB">${p.category || ''}</span>` : ''}
+      </div>
+      <div class="blog-content">
+        <div class="blog-meta"><span class="blog-tag">${p.category || ''}</span><span class="blog-time">· ${p.reading_time || ''}</span></div>
+        <h3 class="post-title">${p.title}</h3>
+        <p>${p.excerpt || ''}</p>
+      </div>
+    </article>
+  `).join('');
+  document.querySelectorAll('#home-blog-grid .fade-up').forEach(el => observer.observe(el));
+})();
+
 // Cookie
 function closeCookie() {
   localStorage.setItem('cookies', '1');
