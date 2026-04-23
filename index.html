@@ -518,7 +518,7 @@ footer {
       <a href="#pricing">Precios</a>
       <a href="#blog">Blog</a>
     </div>
-    <a href="#demo" class="nav-cta">Agendar demo</a>
+    <a href="#demo" class="nav-cta" onclick="openChat();return false;">Agendar demo</a>
   </div>
 </nav>
 
@@ -530,7 +530,7 @@ footer {
       <h1>Los centros educativos pierden alumnos por responder <em>tarde.</em></h1>
       <p>educabot atiende a tus candidatos a cualquier hora, los cualifica automáticamente y agenda la cita en el calendario de Admisiones sin intervención humana.</p>
       <div class="hero-ctas">
-        <a href="#demo" class="btn-primary">
+        <a href="#demo" class="btn-primary" onclick="openChat();return false;">
           Ver educabot en acción
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -571,7 +571,7 @@ footer {
           <div class="msg-bot">Perfecto. Tenemos dos convocatorias este año. ¿Me dices tu nombre y email para enviarte el dossier?</div>
         </div>
         <div class="msg">
-          <div class="msg-user">Carlos Ruiz, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8be8eaf9e7e4f8cbeee6fbf9eef8eaa5e8e4e6">[email&#160;protected]</a></div>
+          <div class="msg-user">Carlos Ruiz, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="066567746a697546636b76746375672865696b">[email&#160;protected]</a></div>
         </div>
         <div class="msg">
           <div class="msg-bot">Gracias Carlos. He reservado una llamada con Admisiones mañana a las 10:00 con enlace Meet incluido. ✓</div>
@@ -708,7 +708,7 @@ footer {
         <li>CRM vía webhook, Zapier o Make</li>
         <li>Scoring adaptativo según matriculaciones reales</li>
       </ul>
-      <a href="#demo" class="price-btn price-btn-primary">Agendar demo</a>
+      <a href="#demo" class="price-btn price-btn-primary" onclick="openChat();return false;">Agendar demo</a>
     </div>
     <div class="price-card">
       <div class="price-plan">Chatbot Web + WhatsApp</div>
@@ -723,7 +723,7 @@ footer {
         <li>Panel unificado para leads de web y WhatsApp</li>
         <li>Misma cualificación y agendado desde ambos canales</li>
       </ul>
-      <a href="#demo" class="price-btn price-btn-secondary">Agendar demo</a>
+      <a href="#demo" class="price-btn price-btn-secondary" onclick="openChat();return false;">Agendar demo</a>
       <div class="price-note">Requiere cuenta de WhatsApp Business activa</div>
     </div>
   </div>
@@ -812,7 +812,7 @@ footer {
         <a href="#">Blog</a>
         <a href="politica-de-privacidad.html">Privacidad</a>
         <a href="politica-de-cookies.html">Cookies</a>
-        <a href="/cdn-cgi/l/email-protection#751d1a1914351c18191417065b1006"><span class="__cf_email__" data-cfemail="8de5e2e1eccde4e0e1eceffea3e8fe">[email&#160;protected]</span></a>
+        <a href="/cdn-cgi/l/email-protection#c3abacafa283aaaeafa2a1b0eda6b0"><span class="__cf_email__" data-cfemail="274f484b46674e4a4b464554094254">[email&#160;protected]</span></a>
       </div>
     </div>
     <div class="footer-copy">© 2025 imlabs · Todos los derechos reservados</div>
@@ -846,6 +846,12 @@ footer {
   `).join('');
   document.querySelectorAll('#home-blog-grid .fade-up').forEach(el => observer.observe(el));
 })();
+
+function openChat() {
+  const btn = document.querySelector('#crm-chat-widget button, [class*="chat"] button, [class*="widget"] button');
+  if (btn) btn.click();
+  else document.querySelector('[id*="crm"] *')?.click();
+}
 
 // Cookie
 function closeCookie() {
